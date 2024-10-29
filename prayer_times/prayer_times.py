@@ -4,8 +4,9 @@ from datetime import datetime, timedelta
 def get_prayer_times():
     prayer_times = {}
     current_date = datetime.now().strftime('%Y-%m-%d')
-    iqama_file = '/config/iqama.csv'
-    csv_file = f"/config/{datetime.now().strftime('%m')}.csv"
+    iqama_file = '/prayer_times/data/iqama.csv'
+    vendredi_file = '/prayer_times/data/vendredi.csv'
+    csv_file = f"/prayer_times/data/{datetime.now().strftime('%m')}.csv"
 
     # Charger les horaires de prière pour aujourd'hui
     try:
@@ -54,11 +55,11 @@ def get_prayer_times():
     
     # Ajouter l'heure de vendredi si disponible
     try:
-        with open('/config/vendredi.csv', mode='r') as file:
+        with open(vendredi_file, mode='r') as file:
             friday_time = file.readline().strip()
             if friday_time:
                 prayer_times['Vendredi'] = friday_time
     except FileNotFoundError:
-        print("File not found: /config/vendredi.csv")
+        print(f"File not found: {vendredi_file}")
 
     return prayer_times
